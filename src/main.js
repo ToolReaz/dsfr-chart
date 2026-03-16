@@ -2,19 +2,19 @@ import '../node_modules/@gouvfr/dsfr/dist/dsfr.module.min.js';
 import '../node_modules/@gouvfr/dsfr/dist/dsfr.main.min.css';
 import '../node_modules/@gouvfr/dsfr/dist/utility/icons/icons.main.min.css';
 
-// import '@/charts/main.js';
 import '@/styles/style.scss';
 
-// import { createApp } from 'vue';
-// import Documentation from '@/components/doc/Documentation.vue';
-
-// document.addEventListener('DOMContentLoaded', function () {
-//   if (window.dsfr && window.dsfr.start) {
-//     window.dsfr.start();
-//   }
-// });
-
-// createApp(Documentation).mount('#app');
+// Import all Svelte chart components to register them as custom elements
+import '@/components/BarChart.svelte';
+import '@/components/LineChart.svelte';
+import '@/components/PieChart.svelte';
+import '@/components/RadarChart.svelte';
+import '@/components/GaugeChart.svelte';
+import '@/components/ScatterChart.svelte';
+import '@/components/BarLineChart.svelte';
+import '@/components/TableChart.svelte';
+import '@/components/DataBox.svelte';
+import '@/components/DialogModal.svelte';
 
 import { mount } from 'svelte'
 import Documentation from '@/components/doc/Documentation.svelte';
