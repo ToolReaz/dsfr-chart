@@ -1,4 +1,4 @@
-import vue from '@vitejs/plugin-vue';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
 
 /** @type {import('vite').UserConfig} */
@@ -32,12 +32,15 @@ export default {
     },
   },
   plugins: [
-    vue({
-      template: {
-        compilerOptions: {
-          isCustomElement: (tag) => ['data-box', 'bar-chart', 'bar-line-chart', 'gauge-chart', 'line-chart', 'map-chart', 'map-chart-reg', 'pie-chart', 'radar-chart', 'scatter-chart', 'table-chart'].includes(tag),
-        },
-      },
-    }),
+    svelte({
+      compilerOptions: { customElement: true }
+    })
+    // vue({
+    //   template: {
+    //     compilerOptions: {
+    //       isCustomElement: (tag) => ['data-box', 'bar-chart', 'bar-line-chart', 'gauge-chart', 'line-chart', 'map-chart', 'map-chart-reg', 'pie-chart', 'radar-chart', 'scatter-chart', 'table-chart'].includes(tag),
+    //     },
+    //   },
+    // }),
   ],
 };
