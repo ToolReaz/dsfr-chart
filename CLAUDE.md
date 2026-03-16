@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-DSFR Chart (`@gouvfr/dsfr-chart`) is a French government design system (DSFR) web components library for data visualization. Vue 3 chart components are wrapped via `defineCustomElement()` into custom elements (light DOM, no Shadow DOM). The documentation page is being migrated from Vue to Svelte (chart components remain Vue).
+DSFR Chart (`@gouvfr/dsfr-chart`) is a French government design system (DSFR) web components library for data visualization. Vue 3 chart components are wrapped via `defineCustomElement()` into custom elements (light DOM, no Shadow DOM). The entire library is being migrated from Vue to Svelte (branch `feat/svelte-migration`), keeping web components as output format.
 
 ## Commands
 

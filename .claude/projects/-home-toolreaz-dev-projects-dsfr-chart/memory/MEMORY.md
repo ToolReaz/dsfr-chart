@@ -1,0 +1,2 @@
+- [project_svelte_migration.md](project_svelte_migration.md) - Full Vue→Svelte migration of chart web components library
+- [user_profile.md](user_profile.md) - French-speaking dev, Vue/Svelte expertise
