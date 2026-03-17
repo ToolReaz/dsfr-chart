@@ -1,7 +1,7 @@
 <svelte:options customElement={{ tag: "bar-chart", shadow: "none" }} />
 
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy, untrack } from 'svelte';
   import { BarController, BarElement, Chart } from 'chart.js';
   import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
   import { choosePalette, generateColors } from '@/utils/colors.js';
@@ -134,8 +134,8 @@
     chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels,
-        datasets,
+        labels: [...labels],
+        datasets: $state.snapshot(datasets),
       },
       options: {
         indexAxis: horizontal === true || horizontal === 'true' ? 'y' : 'x',
@@ -290,14 +290,6 @@
     }
   }
 
-  onMount(() => {
-    configureChartDefaults();
-    resetData();
-    createChart();
-
-    document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
-  });
-
   onDestroy(() => {
     if (chart) {
       chart.destroy();
@@ -311,11 +303,14 @@
     aspectRatio; selectedPalette; highlightIndex; unitTooltip;
     xMin; xMax; yMin; yMax;
 
-    // Only re-render if chart already exists (skip initial — onMount handles that)
-    if (chart) {
+    if (!canvasEl) return;
+
+    untrack(() => {
+      configureChartDefaults();
       resetData();
       createChart();
-    }
+      document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
+    });
   });
 </script>
 

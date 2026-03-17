@@ -1,7 +1,7 @@
 <svelte:options customElement={{ tag: "radar-chart", shadow: "none" }} />
 
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy, untrack } from 'svelte';
   import { Chart, RadarController, RadialLinearScale } from 'chart.js';
   import chroma from 'chroma-js';
   import { configureChartDefaults, capitalize } from '@/utils/global.js';
@@ -112,7 +112,7 @@
 
     chart = new Chart(ctx, {
       type: 'radar',
-      data: { labels, datasets },
+      data: { labels: [...labels], datasets: $state.snapshot(datasets) },
       options: {
         aspectRatio,
         scales: {
@@ -187,13 +187,6 @@
 
   function handleThemeChange(e) { if (chart) changeColors(e.detail.theme); }
 
-  onMount(() => {
-    configureChartDefaults();
-    resetData();
-    createChart();
-    document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
-  });
-
   onDestroy(() => {
     if (chart) chart.destroy();
     document.documentElement.removeEventListener('dsfr.theme', handleThemeChange);
@@ -201,7 +194,13 @@
 
   $effect(() => {
     x; y; name; date; aspectRatio; selectedPalette; unitTooltip;
-    if (chart) { resetData(); createChart(); }
+    if (!canvasEl) return;
+    untrack(() => {
+      configureChartDefaults();
+      resetData();
+      createChart();
+      document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
+    });
   });
 </script>
 

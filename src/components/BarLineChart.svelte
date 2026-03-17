@@ -1,7 +1,7 @@
 <svelte:options customElement={{ tag: "bar-line-chart", shadow: "none" }} />
 
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy, untrack } from 'svelte';
   import { Chart, LineController, LineElement } from 'chart.js';
   import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
   import { generateBarLineChartColors } from '@/utils/colors.js';
@@ -199,7 +199,7 @@
     const ctx = canvasEl.getContext('2d');
 
     chart = new Chart(ctx, {
-      data: { labels, datasets },
+      data: { labels: [...labels], datasets: $state.snapshot(datasets) },
       plugins: [{
         afterDraw: (chartInstance) => {
           if (chartInstance.tooltip?._active && chartInstance.tooltip?._active.length) {
@@ -334,13 +334,6 @@
 
   function handleThemeChange(e) { if (chart) changeColors(e.detail.theme); }
 
-  onMount(() => {
-    configureChartDefaults();
-    resetData();
-    createChart();
-    document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
-  });
-
   onDestroy(() => {
     if (chart) chart.destroy();
     document.documentElement.removeEventListener('dsfr.theme', handleThemeChange);
@@ -351,7 +344,13 @@
     vline; vlinecolor; vlinename; hline; hlinecolor; hlinename;
     date; aspectRatio; selectedPalette; unitTooltipBar; unitTooltipLine;
     xMin; xMax; yBarMin; yBarMax; yLineMin; yLineMax;
-    if (chart) { resetData(); createChart(); }
+    if (!canvasEl) return;
+    untrack(() => {
+      configureChartDefaults();
+      resetData();
+      createChart();
+      document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
+    });
   });
 </script>
 

@@ -1,7 +1,7 @@
 <svelte:options customElement={{ tag: "table-chart", shadow: "none" }} />
 
 <script>
-  import { onMount } from 'svelte';
+  import { untrack } from 'svelte';
   import { formatNumber } from '@/utils/global.js';
 
   let {
@@ -74,15 +74,13 @@
     return classes;
   }
 
-  onMount(() => {
-    resetData();
-    getData();
-  });
-
   $effect(() => {
     x; y; line; name; tableName;
-    resetData();
-    getData();
+    if (!x) return;
+    untrack(() => {
+      resetData();
+      getData();
+    });
   });
 </script>
 

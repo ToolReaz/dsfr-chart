@@ -31,9 +31,12 @@
       .replace(/^-/, '');
 
   function renderChart(node, params) {
+    const props = $state.snapshot(params.props);
     const el = document.createElement(params.tag);
-    for (const [key, value] of Object.entries(params.props)) {
-      el.setAttribute(toKebabCase(key), value);
+    // Set all props as JS properties BEFORE appending to DOM
+    // so data is ready when the custom element's onMount fires
+    for (const [key, value] of Object.entries(props)) {
+      el[key] = value;
     }
     node.appendChild(el);
 

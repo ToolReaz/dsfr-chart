@@ -1,7 +1,7 @@
 <svelte:options customElement={{ tag: "pie-chart", shadow: "none" }} />
 
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy, untrack } from 'svelte';
   import { ArcElement, Chart, DoughnutController, PieController } from 'chart.js';
   import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
   import { generateColors } from '@/utils/colors.js';
@@ -111,7 +111,7 @@
 
     chart = new Chart(ctx, {
       type: isFill ? 'pie' : 'doughnut',
-      data: { labels, datasets },
+      data: { labels: [...labels], datasets: $state.snapshot(datasets) },
       options: {
         aspectRatio,
         layout: { padding: { left: 50, right: 50, top: 0, bottom: 0 } },
@@ -174,13 +174,6 @@
 
   function handleThemeChange(e) { if (chart) changeColors(e.detail.theme); }
 
-  onMount(() => {
-    configureChartDefaults();
-    resetData();
-    createChart();
-    document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
-  });
-
   onDestroy(() => {
     if (chart) chart.destroy();
     document.documentElement.removeEventListener('dsfr.theme', handleThemeChange);
@@ -188,7 +181,13 @@
 
   $effect(() => {
     x; y; name; fill; date; aspectRatio; selectedPalette; unitTooltip;
-    if (chart) { resetData(); createChart(); }
+    if (!canvasEl) return;
+    untrack(() => {
+      configureChartDefaults();
+      resetData();
+      createChart();
+      document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
+    });
   });
 </script>
 

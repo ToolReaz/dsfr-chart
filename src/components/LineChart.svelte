@@ -1,7 +1,7 @@
 <svelte:options customElement={{ tag: "line-chart", shadow: "none" }} />
 
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy, untrack } from 'svelte';
   import { Chart, LineController, LineElement } from 'chart.js';
   import chroma from 'chroma-js';
   import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
@@ -197,7 +197,7 @@
 
     chart = new Chart(ctx, {
       type: 'line',
-      data: { labels, datasets },
+      data: { labels: [...labels], datasets: $state.snapshot(datasets) },
       plugins: [{
         afterDraw: (chartInstance) => {
           if (chartInstance.tooltip?._active && chartInstance.tooltip?._active.length) {
@@ -325,13 +325,6 @@
 
   function handleThemeChange(e) { if (chart) changeColors(e.detail.theme); }
 
-  onMount(() => {
-    configureChartDefaults();
-    resetData();
-    createChart();
-    document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
-  });
-
   onDestroy(() => {
     if (chart) chart.destroy();
     document.documentElement.removeEventListener('dsfr.theme', handleThemeChange);
@@ -341,7 +334,13 @@
     x; y; name; vline; vlinecolor; vlinename; hline; hlinecolor; hlinename;
     date; aspectRatio; formatDate; selectedPalette; unitTooltip;
     xMin; xMax; yMin; yMax;
-    if (chart) { resetData(); createChart(); }
+    if (!canvasEl) return;
+    untrack(() => {
+      configureChartDefaults();
+      resetData();
+      createChart();
+      document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
+    });
   });
 </script>
 
