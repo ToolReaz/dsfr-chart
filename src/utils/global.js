@@ -57,7 +57,7 @@ export function teleportToDatabox(el) {
   const host = el.getRootNode()?.host || el.closest('[databox-id]')?.parentElement?.closest('[databox-id]') || el.parentElement;
   const id = host?.getAttribute?.('databox-id');
   const type = host?.getAttribute?.('databox-type');
-  const source = host?.getAttribute?.('databox-source') || 'default';
+  const source = host?.getAttribute?.('databox-source') || (type === 'table' ? 'global' : 'default');
   if (!id || !type) return;
   const targetId = `${id}-${type}-${source}`;
   const target = document.getElementById(targetId);
