@@ -3,7 +3,7 @@
 <script>
   import { onDestroy, untrack } from 'svelte';
   import { ArcElement, Chart, DoughnutController, PieController } from 'chart.js';
-  import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
+  import { configureChartDefaults, capitalize, formatNumber, teleportToDatabox } from '@/utils/global.js';
   import { generateColors } from '@/utils/colors.js';
 
   Chart.register(DoughnutController, PieController, ArcElement);
@@ -183,6 +183,7 @@
     x; y; name; fill; date; aspectRatio; selectedPalette; unitTooltip;
     if (!canvasEl) return;
     untrack(() => {
+      teleportToDatabox(widgetEl);
       configureChartDefaults();
       resetData();
       createChart();

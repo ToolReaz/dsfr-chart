@@ -4,7 +4,7 @@
   import { onDestroy, untrack } from 'svelte';
   import { Chart, LineController, LineElement } from 'chart.js';
   import chroma from 'chroma-js';
-  import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
+  import { configureChartDefaults, capitalize, formatNumber, teleportToDatabox } from '@/utils/global.js';
   import { choosePalette, getColorsByIndex, getNeutralColor } from '@/utils/colors.js';
 
   Chart.register(LineController, LineElement);
@@ -336,6 +336,7 @@
     xMin; xMax; yMin; yMax;
     if (!canvasEl) return;
     untrack(() => {
+      teleportToDatabox(widgetEl);
       configureChartDefaults();
       resetData();
       createChart();

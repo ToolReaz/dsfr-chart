@@ -3,7 +3,7 @@
 <script>
   import { onDestroy, untrack } from 'svelte';
   import { Chart, ScatterController } from 'chart.js';
-  import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
+  import { configureChartDefaults, capitalize, formatNumber, teleportToDatabox } from '@/utils/global.js';
   import { generateScatterChartColors } from '@/utils/colors.js';
 
   Chart.register(ScatterController);
@@ -329,6 +329,7 @@
     xMin; xMax; yMin; yMax;
     if (!canvasEl) return;
     untrack(() => {
+      teleportToDatabox(widgetEl);
       configureChartDefaults();
       resetData();
       createChart();

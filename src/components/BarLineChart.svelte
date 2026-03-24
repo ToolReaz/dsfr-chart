@@ -3,7 +3,7 @@
 <script>
   import { onDestroy, untrack } from 'svelte';
   import { Chart, LineController, LineElement } from 'chart.js';
-  import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
+  import { configureChartDefaults, capitalize, formatNumber, teleportToDatabox } from '@/utils/global.js';
   import { generateBarLineChartColors } from '@/utils/colors.js';
 
   Chart.register(LineController, LineElement);
@@ -346,6 +346,7 @@
     xMin; xMax; yBarMin; yBarMax; yLineMin; yLineMax;
     if (!canvasEl) return;
     untrack(() => {
+      teleportToDatabox(widgetEl);
       configureChartDefaults();
       resetData();
       createChart();

@@ -3,7 +3,7 @@
 <script>
   import { onDestroy, untrack } from 'svelte';
   import { BarController, BarElement, Chart } from 'chart.js';
-  import { configureChartDefaults, capitalize, formatNumber } from '@/utils/global.js';
+  import { configureChartDefaults, capitalize, formatNumber, teleportToDatabox } from '@/utils/global.js';
   import { choosePalette, generateColors } from '@/utils/colors.js';
 
   Chart.register(BarController, BarElement);
@@ -306,6 +306,7 @@
     if (!canvasEl) return;
 
     untrack(() => {
+      teleportToDatabox(widgetEl);
       configureChartDefaults();
       resetData();
       createChart();

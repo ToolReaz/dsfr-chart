@@ -4,7 +4,7 @@
   import { onDestroy, untrack } from 'svelte';
   import { Chart, RadarController, RadialLinearScale } from 'chart.js';
   import chroma from 'chroma-js';
-  import { configureChartDefaults, capitalize } from '@/utils/global.js';
+  import { configureChartDefaults, capitalize, teleportToDatabox } from '@/utils/global.js';
   import { generateColors } from '@/utils/colors.js';
 
   Chart.register(RadarController, RadialLinearScale);
@@ -196,6 +196,7 @@
     x; y; name; date; aspectRatio; selectedPalette; unitTooltip;
     if (!canvasEl) return;
     untrack(() => {
+      teleportToDatabox(widgetEl);
       configureChartDefaults();
       resetData();
       createChart();

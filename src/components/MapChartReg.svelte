@@ -3,7 +3,7 @@
 <script>
   import { onDestroy, untrack, tick } from 'svelte';
   import * as d3 from 'd3-scale';
-  import { getDep, getReg, getDepsFromReg, isMobile, formatNumber } from '@/utils/global.js';
+  import { getDep, getReg, getDepsFromReg, isMobile, formatNumber, teleportToDatabox } from '@/utils/global.js';
   import { choosePalette } from '@/utils/colors.js';
   import MapInfo from '@/components/MapInfo.svelte';
   import France from '@/components/maps/France.svelte';
@@ -235,6 +235,7 @@
     if (!widgetEl) return;
 
     untrack(async () => {
+      teleportToDatabox(widgetEl);
       await tick();
       createChart();
       document.documentElement.addEventListener('dsfr.theme', handleThemeChange);

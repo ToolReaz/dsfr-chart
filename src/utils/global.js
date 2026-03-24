@@ -46,6 +46,26 @@ export const formatNumber = (value) => {
  * @returns {boolean} True if the device is a mobile, false otherwise
  * @see https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
  */
+/**
+ * Teleport an element into its databox container (replaces Vue's <Teleport>)
+ * Reads databox-id, databox-type, databox-source from the host custom element's HTML attributes,
+ * since Svelte custom elements don't auto-map kebab-case attributes to camelCase props.
+ * @param {HTMLElement} el The widget root element inside the custom element
+ */
+export function teleportToDatabox(el) {
+  if (!el) return;
+  const host = el.getRootNode()?.host || el.closest('[databox-id]')?.parentElement?.closest('[databox-id]') || el.parentElement;
+  const id = host?.getAttribute?.('databox-id');
+  const type = host?.getAttribute?.('databox-type');
+  const source = host?.getAttribute?.('databox-source') || 'default';
+  if (!id || !type) return;
+  const targetId = `${id}-${type}-${source}`;
+  const target = document.getElementById(targetId);
+  if (target) {
+    target.appendChild(el);
+  }
+}
+
 export const isMobile = function () {
   const nav = navigator.userAgent || navigator.vendor || window.opera;
   /* eslint-disable */

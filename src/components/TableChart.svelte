@@ -2,7 +2,7 @@
 
 <script>
   import { untrack } from 'svelte';
-  import { formatNumber } from '@/utils/global.js';
+  import { formatNumber, teleportToDatabox } from '@/utils/global.js';
 
   let {
     x = '',
@@ -15,6 +15,7 @@
     databoxSource = 'global',
   } = $props();
 
+  let widgetEl;
   let xparse = $state([]);
   let yparse = $state([]);
   let lineParse = $state([]);
@@ -78,13 +79,14 @@
     x; y; line; name; tableName;
     if (!x) return;
     untrack(() => {
+      teleportToDatabox(widgetEl);
       resetData();
       getData();
     });
   });
 </script>
 
-<div class="widget_container">
+<div bind:this={widgetEl} class="widget_container">
   <div class="fr-table" style="max-height: 25rem; overflow: auto">
     <div class="fr-table__wrapper">
       <div class="fr-table__container">

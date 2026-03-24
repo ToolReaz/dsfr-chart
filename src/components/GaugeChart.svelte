@@ -2,7 +2,7 @@
 
 <script>
   import { untrack } from 'svelte';
-  import { formatNumber } from '@/utils/global.js';
+  import { formatNumber, teleportToDatabox } from '@/utils/global.js';
 
   let {
     value = '',
@@ -19,6 +19,7 @@
     databoxSource = 'default',
   } = $props();
 
+  let widgetEl;
   let percentage = $state(0);
   let width = $state(0);
 
@@ -35,6 +36,7 @@
     value; percent; init; target; initDate; targetDate; height; legend; date;
     if (!value && !percent) return;
     untrack(() => {
+      teleportToDatabox(widgetEl);
       createChart();
     });
   });
@@ -44,7 +46,7 @@
   }
 </script>
 
-<div class="widget_container fr-grid-row">
+<div bind:this={widgetEl} class="widget_container fr-grid-row">
   <div class="fr-col-12">
     <div class="chart">
       <div class="gauge-container">
