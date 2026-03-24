@@ -51,4 +51,13 @@ export const chartExamples = [
     desc: 'La jauge permet d’afficher des valeurs numériques ou des mesures dans une plage, pour visualiser l’avancement d’un objectif par exemple.',
     graphs: [{ tag: 'gauge-chart', noPalette: true, props: chartData.gaugeChart.default }],
   },
+  {
+    title: 'Cartes',
+    desc: 'Les cartes permettent d’afficher une série de données réparties par département ou région. Les cartes sont actuellement disponibles aux niveaux départemental et régional, et il est également possible d’isoler une région pour en afficher les départements.',
+    graphs: [
+      { tag: 'map-chart', noPalette: true, heading: 'Découpage départemental', props: chartData.mapChart.departments },
+      { tag: 'map-chart', noPalette: true, heading: 'Découpage régional', props: chartData.mapChart.regions },
+      { tag: 'map-chart-reg', noPalette: true, heading: 'Région', props: chartData.mapChartReg.region },
+    ],
+  },
 ];

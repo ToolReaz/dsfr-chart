@@ -11,3 +11,5 @@ import '@/components/PieChart.svelte';
 import '@/components/RadarChart.svelte';
 import '@/components/ScatterChart.svelte';
 import '@/components/TableChart.svelte';
+import '@/components/MapChart.svelte';
+import '@/components/MapChartReg.svelte';
