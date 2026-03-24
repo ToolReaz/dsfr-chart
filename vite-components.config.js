@@ -1,4 +1,4 @@
-import vue from '@vitejs/plugin-vue';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
 
 const library = process.env.LIBRARY || 'DSFRChart';
@@ -25,5 +25,11 @@ export default {
       fileName: library,
     },
   },
-  plugins: [vue()],
+  plugins: [
+    svelte({
+      compilerOptions: {
+        customElement: true,
+      },
+    }),
+  ],
 };
