@@ -80,8 +80,8 @@
     "@storybook/test": "^8.6.12",
     "@storybook/web-components": "^8.6.12",
     "@storybook/web-components-vite": "^8.6.12",
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@types/node": "^22.15.3",
-    "@vitejs/plugin-vue": "^5.2.3",
     "chart.js": "^4.4.9",
     "chroma-js": "^3.1.2",
     "concurrently": "^9.1.2",
@@ -95,10 +95,7 @@
     "sass": "1.79.6",
     "standard": "^17.1.2",
     "storybook": "^8.6.12",
-    "vite": "^6.3.3",
+    "vite": "^8.0.2",
     "vue": "^3.5.13"
-  },
-  "dependencies": {
-    "@sveltejs/vite-plugin-svelte": "^6.2.4"
   }
 }
