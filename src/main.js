@@ -15,6 +15,8 @@ import '@/components/BarLineChart.svelte';
 import '@/components/TableChart.svelte';
 import '@/components/DataBox.svelte';
 import '@/components/DialogModal.svelte';
+import '@/components/MapChart.svelte';
+import '@/components/MapChartReg.svelte';
 
 import { mount } from 'svelte'
 import Documentation from '@/components/doc/Documentation.svelte';

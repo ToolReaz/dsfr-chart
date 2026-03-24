@@ -1,7 +1,7 @@
 <svelte:options customElement={{ tag: "map-chart", shadow: "none" }} />
 
 <script>
-  import { onDestroy, untrack } from 'svelte';
+  import { onDestroy, untrack, tick } from 'svelte';
   import * as d3 from 'd3-scale';
   import { getDep, getReg, getAllReg, getDepsFromReg, isMobile, formatNumber } from '@/utils/global.js';
   import { choosePalette } from '@/utils/colors.js';
@@ -288,9 +288,10 @@
 
     if (!widgetEl) return;
 
-    untrack(() => {
+    untrack(async () => {
       isDep = level === 'dep';
       isReg = level === 'reg';
+      await tick();
       createChart();
       document.documentElement.addEventListener('dsfr.theme', handleThemeChange);
     });
