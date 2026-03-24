@@ -1,6 +1,7 @@
 <svelte:options customElement={{ tag: "gauge-chart", shadow: "none" }} />
 
 <script>
+  import { untrack } from 'svelte';
   import { formatNumber } from '@/utils/global.js';
 
   let {
@@ -33,7 +34,9 @@
   $effect(() => {
     value; percent; init; target; initDate; targetDate; height; legend; date;
     if (!value && !percent) return;
-    createChart();
+    untrack(() => {
+      createChart();
+    });
   });
 
   function isLegend() {
